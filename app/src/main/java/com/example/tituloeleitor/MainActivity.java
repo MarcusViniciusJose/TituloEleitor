@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
-                String nome = editTextNome.getText().toString().trim();
-                String dataNascimento = editTextDataNascimento.getText().toString().trim();
+                String nome = editTextNome.getText().toString();
+                String dataNascimento = editTextDataNascimento.getText().toString();
 
                 if (TextUtils.isEmpty(nome)) {
                     editTextNome.setError("Por favor, insira seu nome.");
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // Calcular idade
                 LocalDate dataNasc = LocalDate.parse(dataNascimento, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-                long anos = Period.between(dataNasc, LocalDate.now()).getYears();
+                long anos = Period.between(dataNasc, LocalDate.now()).get(ChronoUnit.YEARS);
 
                 // Passar para a próxima Activity com os dados do usuário
                 Intent intent = new Intent(getApplicationContext(), RelatorioActivity.class);
